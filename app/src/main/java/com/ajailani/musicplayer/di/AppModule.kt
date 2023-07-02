@@ -6,6 +6,7 @@ val appModule = module {
     includes(
         networkModule,
         dataModule,
-        domainModule
+        domainModule,
+        viewModelModule
     )
 }
