@@ -19,12 +19,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.ajailani.musicplayer.domain.model.Music
 import com.ajailani.musicplayer.ui.screen.home.component.MusicItem
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    homeUiState: HomeUiState
+    homeViewModel: HomeViewModel = koinViewModel()
 ) {
+    val homeUiState = homeViewModel.homeUiState
+
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(

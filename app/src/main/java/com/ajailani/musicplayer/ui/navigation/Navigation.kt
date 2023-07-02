@@ -11,10 +11,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.Home.route) {
-        composable(Screen.Home.route) {
-            val homeViewModel = koinViewModel<HomeViewModel>()
-
-            HomeScreen(homeViewModel.homeUiState)
+        composable(Screen.Home.route) {HomeScreen()
         }
     }
 }
