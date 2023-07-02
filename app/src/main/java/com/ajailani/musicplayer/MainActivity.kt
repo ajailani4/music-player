@@ -3,14 +3,17 @@ package com.ajailani.musicplayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.ajailani.musicplayer.domain.model.Music
+import com.ajailani.musicplayer.ui.component.MusicMiniPlaybackCard
 import com.ajailani.musicplayer.ui.navigation.Navigation
 import com.ajailani.musicplayer.ui.theme.MusicPlayerTheme
 
@@ -24,9 +27,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
+                    Box {
+                        val navController = rememberNavController()
 
-                    Navigation(navController)
+                        Navigation(navController)
+
+                        MusicMiniPlaybackCard(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .align(Alignment.BottomCenter),
+                            music = Music(
+                                id = "1",
+                                title = "Test",
+                                artist = "Someone",
+                                source = "",
+                                image = "https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/art.jpg"
+                            )
+                        )
+                    }
                 }
             }
         }
