@@ -1,0 +1,14 @@
+buildscript {
+    ext {
+        koin_version = '3.4.0'
+        ktor_version = '2.2.3'
+        media3_version = '1.0.2'
+    }
+}
+
+plugins {
+    id 'com.android.application' version '8.0.1' apply false
+    id 'com.android.library' version '8.0.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.20'
+}
