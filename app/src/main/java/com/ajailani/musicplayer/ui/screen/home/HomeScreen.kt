@@ -13,12 +13,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.ajailani.musicplayer.domain.model.Music
 import com.ajailani.musicplayer.ui.screen.home.component.MusicItem
+import com.ajailani.musicplayer.util.PlayerState
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,6 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel()
 ) {
+    val onEvent = homeViewModel::onEvent
     val homeUiState = homeViewModel.homeUiState
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -55,7 +58,10 @@ fun HomeScreen(
                             items(musics) {
                                 MusicItem(
                                     music = it,
-                                    onClick = {}
+                                    onClick = {
+                                        onEvent(HomeEvent.OnMusicSelected(it))
+                                        onEvent(HomeEvent.PlayMusic)
+                                    }
                                 )
                             }
                         }
@@ -69,5 +75,13 @@ fun HomeScreen(
                 }
             }
         }
+    }
+    
+    DisposableEffect(Unit) {
+        homeViewModel.setMediaControllerPlayback {
+            onEvent(HomeEvent.OnPlayerStateChanged(it))
+        }
+
+        onDispose {  }
     }
 }

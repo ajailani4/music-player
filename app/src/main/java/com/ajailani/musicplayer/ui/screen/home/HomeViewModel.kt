@@ -5,20 +5,48 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ajailani.musicplayer.domain.use_case.AddMediaItemsUseCase
 import com.ajailani.musicplayer.domain.use_case.GetMusicsUseCase
+import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
+import com.ajailani.musicplayer.domain.use_case.PlayMusicUseCase
+import com.ajailani.musicplayer.domain.use_case.SetMediaControllerPlaybackUseCase
+import com.ajailani.musicplayer.util.PlayerState
 import com.ajailani.musicplayer.util.Resource
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getMusicsUseCase: GetMusicsUseCase
+    private val getMusicsUseCase: GetMusicsUseCase,
+    private val addMediaItemsUseCase: AddMediaItemsUseCase,
+    private val setMediaControllerPlaybackUseCase: SetMediaControllerPlaybackUseCase,
+    private val playMusicUseCase: PlayMusicUseCase,
+    private val pauseMusicUseCase: PauseMusicUseCase
 ) : ViewModel() {
     var homeUiState by mutableStateOf(HomeUiState())
         private set
 
     init {
         getMusics()
+    }
+
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            HomeEvent.PlayMusic -> play()
+
+            HomeEvent.PauseMusic -> pause()
+
+            is HomeEvent.OnMusicSelected -> {
+                homeUiState = homeUiState.copy(selectedMusic = event.selectedMusic)
+            }
+
+            is HomeEvent.OnPlayerStateChanged -> {
+                homeUiState = homeUiState.copy(playerState = event.playerState)
+            }
+        }
+    }
+
+    fun setMediaControllerPlayback(callback: (playerState: PlayerState) -> Unit) {
+        setMediaControllerPlaybackUseCase(callback)
     }
 
     private fun getMusics() {
@@ -33,6 +61,10 @@ class HomeViewModel(
             }.collect {
                 homeUiState = when (it) {
                     is Resource.Success -> {
+                        it.data?.let { musics ->
+                            addMediaItemsUseCase(musics)
+                        }
+
                         homeUiState.copy(
                             loading = false,
                             musics = it.data
@@ -48,5 +80,17 @@ class HomeViewModel(
                 }
             }
         }
+    }
+
+    private fun play() {
+        homeUiState.apply {
+            musics?.indexOf(selectedMusic)?.let {
+                playMusicUseCase(it)
+            }
+        }
+    }
+
+    private fun pause() {
+        pauseMusicUseCase()
     }
 }

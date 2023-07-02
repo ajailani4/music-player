@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ajailani.musicplayer.domain.model.Music
+import com.ajailani.musicplayer.util.PlayerState
 
 @Composable
 fun MusicItem(
