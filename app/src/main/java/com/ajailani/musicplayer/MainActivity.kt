@@ -1,5 +1,6 @@
 package com.ajailani.musicplayer
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.ajailani.musicplayer.data.service.MusicPlaybackService
 import com.ajailani.musicplayer.domain.model.Music
 import com.ajailani.musicplayer.ui.component.MusicMiniPlaybackCard
 import com.ajailani.musicplayer.ui.navigation.Navigation
@@ -48,5 +50,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        stopService(Intent(this, MusicPlaybackService::class.java))
     }
 }
