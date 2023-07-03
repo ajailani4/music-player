@@ -7,6 +7,5 @@ data class HomeUiState(
     val loading: Boolean? = false,
     val musics: List<Music>? = emptyList(),
     val selectedMusic: Music? = null,
-    val playerState: PlayerState? = null,
     val errorMessage: String? = null
 )

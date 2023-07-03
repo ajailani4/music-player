@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getMusicsUseCase: GetMusicsUseCase,
     private val addMediaItemsUseCase: AddMediaItemsUseCase,
-    private val setMediaControllerPlaybackUseCase: SetMediaControllerPlaybackUseCase,
     private val playMusicUseCase: PlayMusicUseCase,
     private val pauseMusicUseCase: PauseMusicUseCase
 ) : ViewModel() {
@@ -38,15 +37,7 @@ class HomeViewModel(
             is HomeEvent.OnMusicSelected -> {
                 homeUiState = homeUiState.copy(selectedMusic = event.selectedMusic)
             }
-
-            is HomeEvent.OnPlayerStateChanged -> {
-                homeUiState = homeUiState.copy(playerState = event.playerState)
-            }
         }
-    }
-
-    fun setMediaControllerPlayback(callback: (playerState: PlayerState) -> Unit) {
-        setMediaControllerPlaybackUseCase(callback)
     }
 
     private fun getMusics() {

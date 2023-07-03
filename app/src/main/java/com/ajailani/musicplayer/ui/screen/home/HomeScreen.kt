@@ -76,12 +76,4 @@ fun HomeScreen(
             }
         }
     }
-    
-    DisposableEffect(Unit) {
-        homeViewModel.setMediaControllerPlayback {
-            onEvent(HomeEvent.OnPlayerStateChanged(it))
-        }
-
-        onDispose {  }
-    }
 }
