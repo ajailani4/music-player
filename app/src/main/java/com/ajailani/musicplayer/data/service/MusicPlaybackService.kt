@@ -11,7 +11,7 @@ import com.google.common.util.concurrent.ListenableFuture
 
 class MusicPlaybackService : MediaSessionService() {
 
-    private lateinit var mediaSession: MediaSession
+    private var mediaSession: MediaSession? = null
     private lateinit var exoPlayer: ExoPlayer
 
     private val audioAttributes = AudioAttributes.Builder()
@@ -31,10 +31,13 @@ class MusicPlaybackService : MediaSessionService() {
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo) = mediaSession
 
     override fun onDestroy() {
-        super.onDestroy()
+        mediaSession?.run {
+            exoPlayer.release()
+            release()
+            mediaSession = null
+        }
 
-        exoPlayer.release()
-        mediaSession.release()
+        super.onDestroy()
     }
 
     private fun initExoPlayer() {
