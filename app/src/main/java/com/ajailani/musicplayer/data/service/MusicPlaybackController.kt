@@ -22,11 +22,15 @@ class MusicPlaybackController(context: Context) : PlaybackController {
         get() = if (mediaControllerFuture.isDone) mediaControllerFuture.get() else null
 
     override var mediaControllerCallback: (
-        (playerState: PlayerState, currentMusic: Music?) -> Unit
+        (playerState: PlayerState,
+         currentMusic: Music?,
+         currentPosition: Long,
+         totalDuration: Long) -> Unit
     )? = null
 
     init {
-        val sessionToken = SessionToken(context, ComponentName(context, MusicPlaybackService::class.java))
+        val sessionToken =
+            SessionToken(context, ComponentName(context, MusicPlaybackService::class.java))
         mediaControllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
         mediaControllerFuture.addListener({ controllerListener() }, MoreExecutors.directExecutor())
     }
@@ -36,12 +40,19 @@ class MusicPlaybackController(context: Context) : PlaybackController {
             override fun onEvents(player: Player, events: Player.Events) {
                 super.onEvents(player, events)
 
-                val playerState = mapPlaybackStateToPlayerState(
-                    playbackState = player.playbackState,
-                    isPlaying = player.isPlaying
-                )
+                with(player) {
+                    val playerState = mapPlaybackStateToPlayerState(
+                        playbackState = playbackState,
+                        isPlaying = isPlaying
+                    )
 
-                mediaControllerCallback?.invoke(playerState, player.currentMediaItem?.toMusic())
+                    mediaControllerCallback?.invoke(
+                        playerState,
+                        currentMediaItem?.toMusic(),
+                        currentPosition.coerceAtLeast(0L),
+                        duration.coerceAtLeast(0L)
+                    )
+                }
             }
         })
     }
@@ -87,6 +98,8 @@ class MusicPlaybackController(context: Context) : PlaybackController {
     override fun pause() {
         mediaController?.pause()
     }
+
+    override fun getCurrentPosition() = mediaController?.currentPosition ?: 0L
 
     override fun destroy() {
         MediaController.releaseFuture(mediaControllerFuture)

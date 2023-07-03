@@ -16,6 +16,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PauseCircle
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Repeat
@@ -41,11 +43,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ajailani.musicplayer.ui.shared_component.MusicPlaybackUiState
+import com.ajailani.musicplayer.util.PlayerState
+import com.ajailani.musicplayer.util.toTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MusicPlayerScreen(
-    //musicPlaybackUiState: MusicPlaybackUiState
+    musicPlaybackUiState: MusicPlaybackUiState
 ) {
     Column(
         modifier = Modifier
@@ -67,96 +71,102 @@ fun MusicPlayerScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                /*musicPlaybackUiState.currentMediaItem?.mediaMetadata?.let {
-
-                }*/
-                AsyncImage(
-                    modifier = Modifier
-                        .size(280.dp)
-                        .clip(MaterialTheme.shapes.large),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(/*it.artworkUri*/"https://storage.googleapis.com/automotive-media/album_art.jpg")
-                        .build(),
-                    contentScale = ContentScale.FillBounds,
-                    contentDescription = "Music cover"
-                )
-                Spacer(modifier = Modifier.height(40.dp))
-                Text(
-                    text = /*it.title.toString()*/"Test",
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = /*it.artist.toString()*/"Someone",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Spacer(modifier = Modifier.height(30.dp))
-                CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-                    Slider(
-                        value = 0.5f,
-                        onValueChange = {}
-                    )
-                }
-                Spacer(modifier = Modifier.height(3.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "2:30",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Text(
-                        text = "5:00",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-                Spacer(modifier = Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .clickable {},
-                        imageVector = Icons.Default.Shuffle,
-                        contentDescription = "Shuffle button"
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .clickable {},
-                        imageVector = Icons.Default.SkipPrevious,
-                        contentDescription = "Skip previous button"
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .size(70.dp)
-                            .clip(CircleShape)
-                            .clickable {},
-                        imageVector = Icons.Default.PlayCircle,
-                        contentDescription = "Play button"
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .clickable {},
-                        imageVector = Icons.Default.SkipNext,
-                        contentDescription = "Skip next button"
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .clickable {},
-                        imageVector = Icons.Default.Repeat,
-                        contentDescription = "Repeat button"
-                    )
+                with(musicPlaybackUiState) {
+                    currentMusic?.run {
+                        AsyncImage(
+                            modifier = Modifier
+                                .size(280.dp)
+                                .clip(MaterialTheme.shapes.large),
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(image)
+                                .build(),
+                            contentScale = ContentScale.FillBounds,
+                            contentDescription = "Music cover"
+                        )
+                        Spacer(modifier = Modifier.height(40.dp))
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = artist,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Spacer(modifier = Modifier.height(30.dp))
+                        CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+                            Slider(
+                                value = currentPosition.toFloat(),
+                                valueRange = 0f..totalDuration.toFloat(),
+                                onValueChange = {}
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(3.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = currentPosition.toTime(),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = totalDuration.toTime(),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(CircleShape)
+                                .clickable {},
+                            imageVector = Icons.Default.Shuffle,
+                            contentDescription = "Shuffle button"
+                        )
+                        Icon(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(CircleShape)
+                                .clickable {},
+                            imageVector = Icons.Default.SkipPrevious,
+                            contentDescription = "Skip previous button"
+                        )
+                        Icon(
+                            modifier = Modifier
+                                .size(70.dp)
+                                .clip(CircleShape)
+                                .clickable {},
+                            imageVector = if (playerState == PlayerState.PLAYING) {
+                                Icons.Default.PauseCircle
+                            } else {
+                                Icons.Default.PlayCircle
+                            },
+                            contentDescription = "Play or pause button"
+                        )
+                        Icon(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(CircleShape)
+                                .clickable {},
+                            imageVector = Icons.Default.SkipNext,
+                            contentDescription = "Skip next button"
+                        )
+                        Icon(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(CircleShape)
+                                .clickable {},
+                            imageVector = Icons.Default.Repeat,
+                            contentDescription = "Repeat button"
+                        )
+                    }
                 }
             }
         }

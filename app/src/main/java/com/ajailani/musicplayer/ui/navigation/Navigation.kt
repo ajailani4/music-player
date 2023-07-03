@@ -24,12 +24,15 @@ fun Navigation(
             HomeScreen(
                 onEvent = homeViewModel::onEvent,
                 homeUiState = homeViewModel.homeUiState,
-                musicPlaybackUiState = musicPlaybackUiState
+                musicPlaybackUiState = musicPlaybackUiState,
+                onNavigateToMusicPlayer = {
+                    navController.navigate(Screen.MusicPlayer.route)
+                }
             )
         }
 
         composable(Screen.MusicPlayer.route) {
-            MusicPlayerScreen()
+            MusicPlayerScreen(musicPlaybackUiState)
         }
     }
 }

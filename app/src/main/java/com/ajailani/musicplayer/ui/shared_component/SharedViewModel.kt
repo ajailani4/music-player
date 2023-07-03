@@ -4,11 +4,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ajailani.musicplayer.domain.use_case.DestroyMediaControllerUseCase
+import com.ajailani.musicplayer.domain.use_case.GetCurrentPositionUseCase
 import com.ajailani.musicplayer.domain.use_case.SetMediaControllerCallbackUseCase
+import com.ajailani.musicplayer.util.PlayerState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 class SharedViewModel(
     private val setMediaControllerCallbackUseCase: SetMediaControllerCallbackUseCase,
+    private val getCurrentPositionUseCase: GetCurrentPositionUseCase,
     private val destroyPlaybackCallbackUseCase: DestroyMediaControllerUseCase
 ) : ViewModel() {
     var musicPlaybackUiState by mutableStateOf(MusicPlaybackUiState())
@@ -19,11 +26,24 @@ class SharedViewModel(
     }
 
     private fun setMediaControllerCallback() {
-        setMediaControllerCallbackUseCase { playerState, currentMusic ->
+        setMediaControllerCallbackUseCase { playerState, currentMusic, currentDuration, totalDuration ->
             musicPlaybackUiState = musicPlaybackUiState.copy(
                 playerState = playerState,
-                currentMusic = currentMusic
+                currentMusic = currentMusic,
+                currentPosition = currentDuration,
+                totalDuration = totalDuration
             )
+
+            if (playerState == PlayerState.PLAYING) {
+                viewModelScope.launch {
+                    while (true) {
+                        delay(1.seconds)
+                        musicPlaybackUiState = musicPlaybackUiState.copy(
+                            currentPosition = getCurrentPositionUseCase()
+                        )
+                    }
+                }
+            }
         }
     }
 

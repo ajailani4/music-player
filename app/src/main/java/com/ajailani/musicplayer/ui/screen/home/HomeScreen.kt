@@ -28,7 +28,8 @@ import com.ajailani.musicplayer.util.PlayerState
 fun HomeScreen(
     onEvent: (HomeEvent) -> Unit,
     homeUiState: HomeUiState,
-    musicPlaybackUiState: MusicPlaybackUiState
+    musicPlaybackUiState: MusicPlaybackUiState,
+    onNavigateToMusicPlayer: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -74,8 +75,10 @@ fun HomeScreen(
                                             .align(Alignment.BottomCenter),
                                         music = currentMusic,
                                         playerState = playerState,
-                                        onResumeClicked = { onEvent(HomeEvent.ResumeMusic) }
-                                    ) { onEvent(HomeEvent.PauseMusic) }
+                                        onResumeClicked = { onEvent(HomeEvent.ResumeMusic) },
+                                        onPauseClicked = { onEvent(HomeEvent.PauseMusic) },
+                                        onClick = { onNavigateToMusicPlayer() }
+                                    )
                                 }
                             }
                         }

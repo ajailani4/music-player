@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,15 +31,20 @@ import coil.request.ImageRequest
 import com.ajailani.musicplayer.domain.model.Music
 import com.ajailani.musicplayer.util.PlayerState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MusicMiniPlayerCard(
     modifier: Modifier = Modifier,
     music: Music?,
     playerState: PlayerState?,
     onResumeClicked: () -> Unit,
-    onPauseClicked: () -> Unit
+    onPauseClicked: () -> Unit,
+    onClick: () -> Unit
 ) {
-    Card(modifier = modifier) {
+    Card(
+        modifier = modifier,
+        onClick = onClick
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
