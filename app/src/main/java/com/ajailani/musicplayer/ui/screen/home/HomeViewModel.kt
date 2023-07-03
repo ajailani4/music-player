@@ -10,8 +10,6 @@ import com.ajailani.musicplayer.domain.use_case.GetMusicsUseCase
 import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.PlayMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.ResumeMusicUseCase
-import com.ajailani.musicplayer.domain.use_case.SetMediaControllerPlaybackUseCase
-import com.ajailani.musicplayer.util.PlayerState
 import com.ajailani.musicplayer.util.Resource
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch

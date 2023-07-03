@@ -6,12 +6,25 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ajailani.musicplayer.ui.screen.home.HomeScreen
 import com.ajailani.musicplayer.ui.screen.home.HomeViewModel
+import com.ajailani.musicplayer.ui.shared_component.SharedViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(
+    navController: NavHostController,
+    sharedViewModel: SharedViewModel
+) {
+    val musicPlaybackUiState = sharedViewModel.musicPlaybackUiState
+
     NavHost(navController = navController, startDestination = Screen.Home.route) {
-        composable(Screen.Home.route) {HomeScreen()
+        composable(Screen.Home.route) {
+            val homeViewModel: HomeViewModel = koinViewModel()
+
+            HomeScreen(
+                onEvent = homeViewModel::onEvent,
+                homeUiState = homeViewModel.homeUiState,
+                musicPlaybackUiState = musicPlaybackUiState
+            )
         }
     }
 }

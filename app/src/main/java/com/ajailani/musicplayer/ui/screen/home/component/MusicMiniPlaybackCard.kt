@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -26,11 +27,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ajailani.musicplayer.domain.model.Music
+import com.ajailani.musicplayer.util.PlayerState
 
 @Composable
 fun MusicMiniPlaybackCard(
     modifier: Modifier = Modifier,
-    music: Music
+    music: Music,
+    playerState: PlayerState,
+    onResumeClicked: () -> Unit,
+    onPauseClicked: () -> Unit
 ) {
     Card(modifier = modifier) {
         Row(
@@ -67,10 +72,22 @@ fun MusicMiniPlaybackCard(
                     )
                 }
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = {
+                    when (playerState) {
+                        PlayerState.PLAYING -> onPauseClicked()
+                        PlayerState.PAUSED -> onResumeClicked()
+                        else -> {}
+                    }
+                }
+            ) {
                 Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = ""
+                    imageVector = if (playerState == PlayerState.PLAYING) {
+                        Icons.Default.Pause
+                    } else {
+                        Icons.Default.PlayArrow
+                    },
+                    contentDescription = "Play or pause button"
                 )
             }
         }
