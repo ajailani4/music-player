@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ajailani.musicplayer.ui.screen.home.HomeScreen
 import com.ajailani.musicplayer.ui.screen.home.HomeViewModel
+import com.ajailani.musicplayer.ui.screen.music_player.MusicPlayerScreen
 import com.ajailani.musicplayer.ui.shared_component.SharedViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -25,6 +26,10 @@ fun Navigation(
                 homeUiState = homeViewModel.homeUiState,
                 musicPlaybackUiState = musicPlaybackUiState
             )
+        }
+
+        composable(Screen.MusicPlayer.route) {
+            MusicPlayerScreen()
         }
     }
 }
