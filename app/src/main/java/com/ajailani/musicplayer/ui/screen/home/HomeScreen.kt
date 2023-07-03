@@ -41,7 +41,7 @@ fun HomeScreen(
             )
         }
     ) { innerPadding ->
-        homeUiState.apply {
+        homeUiState.run {
             when {
                 loading == true -> {
                     Box(
