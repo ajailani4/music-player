@@ -77,6 +77,10 @@ class MusicPlaybackController(context: Context) : PlaybackController {
         }
     }
 
+    override fun resume() {
+        mediaController?.play()
+    }
+
     override fun pause() {
         mediaController?.pause()
     }

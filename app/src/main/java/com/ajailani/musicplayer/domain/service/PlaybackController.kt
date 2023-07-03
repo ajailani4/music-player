@@ -8,5 +8,6 @@ interface PlaybackController {
 
     fun addMediaItems(musics: List<Music>)
     fun play(mediaItemIndex: Int)
+    fun resume()
     fun pause()
 }
