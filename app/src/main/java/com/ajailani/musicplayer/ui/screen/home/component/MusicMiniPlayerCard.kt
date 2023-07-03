@@ -30,7 +30,7 @@ import coil.request.ImageRequest
 import com.ajailani.musicplayer.util.PlayerState
 
 @Composable
-fun MusicMiniPlaybackCard(
+fun MusicMiniPlayerCard(
     modifier: Modifier = Modifier,
     mediaItem: MediaItem?,
     playerState: PlayerState?,

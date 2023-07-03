@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ajailani.musicplayer.ui.screen.home.component.MusicItem
-import com.ajailani.musicplayer.ui.screen.home.component.MusicMiniPlaybackCard
+import com.ajailani.musicplayer.ui.screen.home.component.MusicMiniPlayerCard
 import com.ajailani.musicplayer.ui.shared_component.MusicPlaybackUiState
 import com.ajailani.musicplayer.util.PlayerState
 
@@ -68,7 +68,7 @@ fun HomeScreen(
 
                             musicPlaybackUiState.run {
                                 if (playerState != PlayerState.STOPPED) {
-                                    MusicMiniPlaybackCard(
+                                    MusicMiniPlayerCard(
                                         modifier = Modifier
                                             .padding(10.dp)
                                             .align(Alignment.BottomCenter),
