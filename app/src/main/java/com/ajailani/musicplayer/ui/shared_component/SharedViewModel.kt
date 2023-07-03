@@ -4,23 +4,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.ajailani.musicplayer.domain.use_case.SetMediaControllerPlaybackUseCase
+import com.ajailani.musicplayer.domain.use_case.DestroyMediaControllerUseCase
+import com.ajailani.musicplayer.domain.use_case.SetMediaControllerCallbackUseCase
 
 class SharedViewModel(
-    private val setMediaControllerPlaybackUseCase: SetMediaControllerPlaybackUseCase,
+    private val setMediaControllerCallbackUseCase: SetMediaControllerCallbackUseCase,
+    private val destroyPlaybackCallbackUseCase: DestroyMediaControllerUseCase
 ) : ViewModel() {
     var musicPlaybackUiState by mutableStateOf(MusicPlaybackUiState())
         private set
 
     init {
-        setMediaControllerPlayback()
+        setMediaControllerCallback()
     }
 
-    private fun setMediaControllerPlayback() {
-        setMediaControllerPlaybackUseCase {
+    private fun setMediaControllerCallback() {
+        setMediaControllerCallbackUseCase {
             musicPlaybackUiState = musicPlaybackUiState.copy(
                 playerState = it
             )
         }
+    }
+
+    fun destroyMediaController() {
+        destroyPlaybackCallbackUseCase()
     }
 }

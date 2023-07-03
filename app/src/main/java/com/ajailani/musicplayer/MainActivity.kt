@@ -12,9 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.ajailani.musicplayer.data.service.MusicPlaybackService
 import com.ajailani.musicplayer.ui.navigation.Navigation
+import com.ajailani.musicplayer.ui.shared_component.SharedViewModel
 import com.ajailani.musicplayer.ui.theme.MusicPlayerTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val sharedViewModel: SharedViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -26,7 +30,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
-                    Navigation(navController)
+                    Navigation(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel
+                    )
                 }
             }
         }
@@ -35,6 +42,7 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
+        sharedViewModel.destroyMediaController()
         stopService(Intent(this, MusicPlaybackService::class.java))
     }
 }
