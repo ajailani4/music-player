@@ -72,7 +72,7 @@ fun HomeScreen(
                                         modifier = Modifier
                                             .padding(10.dp)
                                             .align(Alignment.BottomCenter),
-                                        mediaItem = currentMediaItem,
+                                        music = currentMusic,
                                         playerState = playerState,
                                         onResumeClicked = { onEvent(HomeEvent.ResumeMusic) }
                                     ) { onEvent(HomeEvent.PauseMusic) }

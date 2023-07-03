@@ -27,12 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.media3.common.MediaItem
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.ajailani.musicplayer.domain.model.Music
 import com.ajailani.musicplayer.util.PlayerState
 
 @Composable
 fun MusicMiniPlayerCard(
     modifier: Modifier = Modifier,
-    mediaItem: MediaItem?,
+    music: Music?,
     playerState: PlayerState?,
     onResumeClicked: () -> Unit,
     onPauseClicked: () -> Unit
@@ -45,13 +46,13 @@ fun MusicMiniPlayerCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row {
-                mediaItem?.mediaMetadata?.let {
+                music?.run {
                     AsyncImage(
                         modifier = Modifier
                             .size(45.dp)
                             .clip(MaterialTheme.shapes.small),
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(it.artworkUri)
+                            .data(image)
                             .build(),
                         contentScale = ContentScale.FillBounds,
                         contentDescription = "Music cover"
@@ -59,14 +60,14 @@ fun MusicMiniPlayerCard(
                     Spacer(modifier = Modifier.width(15.dp))
                     Column {
                         Text(
-                            text = it.title.toString(),
+                            text = title,
                             style = MaterialTheme.typography.titleMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = it.artist.toString(),
+                            text = artist,
                             style = MaterialTheme.typography.bodyMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis

@@ -8,6 +8,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
+import com.ajailani.musicplayer.data.mapper.toMusic
 import com.ajailani.musicplayer.domain.model.Music
 import com.ajailani.musicplayer.domain.service.PlaybackController
 import com.ajailani.musicplayer.util.PlayerState
@@ -21,7 +22,7 @@ class MusicPlaybackController(context: Context) : PlaybackController {
         get() = if (mediaControllerFuture.isDone) mediaControllerFuture.get() else null
 
     override var mediaControllerCallback: (
-        (playerState: PlayerState, currentMediaItem: MediaItem?) -> Unit
+        (playerState: PlayerState, currentMusic: Music?) -> Unit
     )? = null
 
     init {
@@ -40,7 +41,7 @@ class MusicPlaybackController(context: Context) : PlaybackController {
                     isPlaying = player.isPlaying
                 )
 
-                mediaControllerCallback?.invoke(playerState, player.currentMediaItem)
+                mediaControllerCallback?.invoke(playerState, player.currentMediaItem?.toMusic())
             }
         })
     }
