@@ -9,6 +9,7 @@ import com.ajailani.musicplayer.domain.use_case.AddMediaItemsUseCase
 import com.ajailani.musicplayer.domain.use_case.GetMusicsUseCase
 import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.PlayMusicUseCase
+import com.ajailani.musicplayer.domain.use_case.ResumeMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.SetMediaControllerPlaybackUseCase
 import com.ajailani.musicplayer.util.PlayerState
 import com.ajailani.musicplayer.util.Resource
@@ -19,6 +20,7 @@ class HomeViewModel(
     private val getMusicsUseCase: GetMusicsUseCase,
     private val addMediaItemsUseCase: AddMediaItemsUseCase,
     private val playMusicUseCase: PlayMusicUseCase,
+    private val resumeMusicUseCase: ResumeMusicUseCase,
     private val pauseMusicUseCase: PauseMusicUseCase
 ) : ViewModel() {
     var homeUiState by mutableStateOf(HomeUiState())
@@ -31,6 +33,8 @@ class HomeViewModel(
     fun onEvent(event: HomeEvent) {
         when (event) {
             HomeEvent.PlayMusic -> play()
+
+            HomeEvent.ResumeMusic -> resume()
 
             HomeEvent.PauseMusic -> pause()
 
@@ -80,6 +84,11 @@ class HomeViewModel(
             }
         }
     }
+
+    private fun resume() {
+        resumeMusicUseCase()
+    }
+
 
     private fun pause() {
         pauseMusicUseCase()
