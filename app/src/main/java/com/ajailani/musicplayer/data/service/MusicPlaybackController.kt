@@ -20,7 +20,9 @@ class MusicPlaybackController(context: Context) : PlaybackController {
     private val mediaController: MediaController?
         get() = if (mediaControllerFuture.isDone) mediaControllerFuture.get() else null
 
-    override var mediaControllerCallback: ((playerState: PlayerState) -> Unit)? = null
+    override var mediaControllerCallback: (
+        (playerState: PlayerState, currentMediaItem: MediaItem?) -> Unit
+    )? = null
 
     init {
         val sessionToken = SessionToken(context, ComponentName(context, MusicPlaybackService::class.java))
@@ -38,7 +40,7 @@ class MusicPlaybackController(context: Context) : PlaybackController {
                     isPlaying = player.isPlaying
                 )
 
-                mediaControllerCallback?.invoke(playerState)
+                mediaControllerCallback?.invoke(playerState, player.currentMediaItem)
             }
         })
     }
