@@ -19,9 +19,10 @@ class SharedViewModel(
     }
 
     private fun setMediaControllerCallback() {
-        setMediaControllerCallbackUseCase {
+        setMediaControllerCallbackUseCase { playerState, currentMediaItem ->
             musicPlaybackUiState = musicPlaybackUiState.copy(
-                playerState = it
+                playerState = playerState,
+                currentMediaItem = currentMediaItem
             )
         }
     }

@@ -24,16 +24,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.media3.common.MediaItem
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.ajailani.musicplayer.domain.model.Music
 import com.ajailani.musicplayer.util.PlayerState
 
 @Composable
 fun MusicMiniPlaybackCard(
     modifier: Modifier = Modifier,
-    music: Music,
-    playerState: PlayerState,
+    mediaItem: MediaItem?,
+    playerState: PlayerState?,
     onResumeClicked: () -> Unit,
     onPauseClicked: () -> Unit
 ) {
@@ -45,31 +45,33 @@ fun MusicMiniPlaybackCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row {
-                AsyncImage(
-                    modifier = Modifier
-                        .size(45.dp)
-                        .clip(MaterialTheme.shapes.small),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(music.image)
-                        .build(),
-                    contentScale = ContentScale.FillBounds,
-                    contentDescription = "Music cover"
-                )
-                Spacer(modifier = Modifier.width(15.dp))
-                Column {
-                    Text(
-                        text = music.title,
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                mediaItem?.mediaMetadata?.let {
+                    AsyncImage(
+                        modifier = Modifier
+                            .size(45.dp)
+                            .clip(MaterialTheme.shapes.small),
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(it.artworkUri)
+                            .build(),
+                        contentScale = ContentScale.FillBounds,
+                        contentDescription = "Music cover"
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Text(
-                        text = music.artist,
-                        style = MaterialTheme.typography.bodyMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    Spacer(modifier = Modifier.width(15.dp))
+                    Column {
+                        Text(
+                            text = it.title.toString(),
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = it.artist.toString(),
+                            style = MaterialTheme.typography.bodyMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
             IconButton(
