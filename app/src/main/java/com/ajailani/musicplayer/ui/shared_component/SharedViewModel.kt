@@ -26,12 +26,13 @@ class SharedViewModel(
     }
 
     private fun setMediaControllerCallback() {
-        setMediaControllerCallbackUseCase { playerState, currentMusic, currentPosition, totalDuration ->
+        setMediaControllerCallbackUseCase { playerState, currentMusic, currentPosition, totalDuration, isShuffleEnabled ->
             musicPlaybackUiState = musicPlaybackUiState.copy(
                 playerState = playerState,
                 currentMusic = currentMusic,
                 currentPosition = currentPosition,
-                totalDuration = totalDuration
+                totalDuration = totalDuration,
+                isShuffleEnabled = isShuffleEnabled
             )
 
             if (playerState == PlayerState.PLAYING) {

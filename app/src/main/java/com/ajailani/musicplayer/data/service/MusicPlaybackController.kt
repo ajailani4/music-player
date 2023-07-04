@@ -25,7 +25,8 @@ class MusicPlaybackController(context: Context) : PlaybackController {
         (playerState: PlayerState,
          currentMusic: Music?,
          currentPosition: Long,
-         totalDuration: Long) -> Unit
+         totalDuration: Long,
+         isShuffleEnabled: Boolean) -> Unit
     )? = null
 
     init {
@@ -50,7 +51,8 @@ class MusicPlaybackController(context: Context) : PlaybackController {
                         playerState,
                         currentMediaItem?.toMusic(),
                         currentPosition.coerceAtLeast(0L),
-                        duration.coerceAtLeast(0L)
+                        duration.coerceAtLeast(0L),
+                        shuffleModeEnabled
                     )
                 }
             }
@@ -109,6 +111,10 @@ class MusicPlaybackController(context: Context) : PlaybackController {
 
     override fun skipPrevious() {
         mediaController?.seekToPrevious()
+    }
+
+    override fun setShuffleModeEnabled(isEnabled: Boolean) {
+        mediaController?.shuffleModeEnabled = isEnabled
     }
 
     override fun getCurrentPosition() = mediaController?.currentPosition ?: 0L

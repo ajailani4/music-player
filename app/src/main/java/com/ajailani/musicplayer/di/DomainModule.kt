@@ -2,6 +2,7 @@ package com.ajailani.musicplayer.di
 
 import com.ajailani.musicplayer.domain.use_case.AddMediaItemsUseCase
 import com.ajailani.musicplayer.domain.use_case.DestroyMediaControllerUseCase
+import com.ajailani.musicplayer.domain.use_case.SetMusicShuffleEnabledUseCase
 import com.ajailani.musicplayer.domain.use_case.GetCurrentMusicPositionUseCase
 import com.ajailani.musicplayer.domain.use_case.GetMusicsUseCase
 import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
@@ -23,6 +24,7 @@ val domainModule = module {
     single { SeekMusicPositionUseCase(get()) }
     single { SkipNextMusicUseCase(get()) }
     single { SkipPreviousMusicUseCase(get()) }
+    single { SetMusicShuffleEnabledUseCase(get()) }
     single { GetCurrentMusicPositionUseCase(get()) }
     single { DestroyMediaControllerUseCase(get()) }
 }

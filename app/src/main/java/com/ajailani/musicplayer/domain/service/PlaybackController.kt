@@ -8,7 +8,8 @@ interface PlaybackController {
         (playerState: PlayerState,
          currentMusic: Music?,
          currentPosition: Long,
-         totalDuration: Long) -> Unit
+         totalDuration: Long,
+         isShuffleEnabled: Boolean) -> Unit
     )?
 
     fun addMediaItems(musics: List<Music>)
@@ -24,6 +25,8 @@ interface PlaybackController {
     fun skipNext()
 
     fun skipPrevious()
+
+    fun setShuffleModeEnabled(isEnabled: Boolean)
 
     fun getCurrentPosition(): Long
 

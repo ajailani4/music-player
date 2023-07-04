@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.PauseCircle
 import androidx.compose.material.icons.rounded.PlayCircle
 import androidx.compose.material.icons.rounded.Repeat
 import androidx.compose.material.icons.rounded.Shuffle
+import androidx.compose.material.icons.rounded.ShuffleOn
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -130,15 +131,23 @@ fun MusicPlayerScreen(
                         Icon(
                             modifier = Modifier
                                 .size(32.dp)
-                                .clip(CircleShape)
-                                .clickable {},
-                            imageVector = Icons.Rounded.Shuffle,
+                                .clickable {
+                                    if (isShuffleEnabled) {
+                                        onEvent(MusicPlayerEvent.SetMusicShuffleEnabled(false))
+                                    } else {
+                                        onEvent(MusicPlayerEvent.SetMusicShuffleEnabled(true))
+                                    }
+                                },
+                            imageVector = if (isShuffleEnabled) {
+                                Icons.Rounded.ShuffleOn
+                            } else {
+                                Icons.Rounded.Shuffle
+                            },
                             contentDescription = "Shuffle button"
                         )
                         Icon(
                             modifier = Modifier
                                 .size(32.dp)
-                                .clip(CircleShape)
                                 .clickable { onEvent(MusicPlayerEvent.SkipPreviousMusic) },
                             imageVector = Icons.Rounded.SkipPrevious,
                             contentDescription = "Skip previous button"
@@ -164,7 +173,6 @@ fun MusicPlayerScreen(
                         Icon(
                             modifier = Modifier
                                 .size(32.dp)
-                                .clip(CircleShape)
                                 .clickable { onEvent(MusicPlayerEvent.SkipNextMusic) },
                             imageVector = Icons.Rounded.SkipNext,
                             contentDescription = "Skip next button"
@@ -172,7 +180,6 @@ fun MusicPlayerScreen(
                         Icon(
                             modifier = Modifier
                                 .size(32.dp)
-                                .clip(CircleShape)
                                 .clickable {},
                             imageVector = Icons.Rounded.Repeat,
                             contentDescription = "Repeat button"

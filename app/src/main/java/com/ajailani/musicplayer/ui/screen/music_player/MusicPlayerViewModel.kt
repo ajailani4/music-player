@@ -1,6 +1,7 @@
 package com.ajailani.musicplayer.ui.screen.music_player
 
 import androidx.lifecycle.ViewModel
+import com.ajailani.musicplayer.domain.use_case.SetMusicShuffleEnabledUseCase
 import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.ResumeMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.SeekMusicPositionUseCase
@@ -12,7 +13,8 @@ class MusicPlayerViewModel(
     private val pauseMusicUseCase: PauseMusicUseCase,
     private val seekMusicPositionUseCase: SeekMusicPositionUseCase,
     private val skipNextMusicUseCase: SkipNextMusicUseCase,
-    private val skipPreviousMusicUseCase: SkipPreviousMusicUseCase
+    private val skipPreviousMusicUseCase: SkipPreviousMusicUseCase,
+    private val setMusicShuffleEnabledUseCase: SetMusicShuffleEnabledUseCase
 ) : ViewModel() {
     fun onEvent(event: MusicPlayerEvent) {
         when (event) {
@@ -25,6 +27,8 @@ class MusicPlayerViewModel(
             MusicPlayerEvent.SkipPreviousMusic -> skipPreviousMusic()
 
             is MusicPlayerEvent.SeekMusicPosition -> seekToMusicPosition(event.musicPosition)
+
+            is MusicPlayerEvent.SetMusicShuffleEnabled -> setMusicShuffleEnabled(event.isShuffleEnabled)
         }
     }
 
@@ -46,5 +50,9 @@ class MusicPlayerViewModel(
 
     private fun skipPreviousMusic() {
         skipPreviousMusicUseCase()
+    }
+
+    private fun setMusicShuffleEnabled(isEnabled: Boolean) {
+        setMusicShuffleEnabledUseCase(isEnabled)
     }
 }

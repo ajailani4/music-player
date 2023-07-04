@@ -12,7 +12,8 @@ class SetMediaControllerCallbackUseCase(
             playerState: PlayerState,
             currentMusic: Music?,
             currentPosition: Long,
-            totalDuration: Long
+            totalDuration: Long,
+            isShuffleEnabled: Boolean
         ) -> Unit
     ) {
         playbackController.mediaControllerCallback = callback
