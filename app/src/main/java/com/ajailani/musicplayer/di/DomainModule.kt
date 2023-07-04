@@ -2,11 +2,12 @@ package com.ajailani.musicplayer.di
 
 import com.ajailani.musicplayer.domain.use_case.AddMediaItemsUseCase
 import com.ajailani.musicplayer.domain.use_case.DestroyMediaControllerUseCase
-import com.ajailani.musicplayer.domain.use_case.GetCurrentPositionUseCase
+import com.ajailani.musicplayer.domain.use_case.GetCurrentMusicPositionUseCase
 import com.ajailani.musicplayer.domain.use_case.GetMusicsUseCase
 import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.PlayMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.ResumeMusicUseCase
+import com.ajailani.musicplayer.domain.use_case.SeekMusicPositionUseCase
 import com.ajailani.musicplayer.domain.use_case.SetMediaControllerCallbackUseCase
 import org.koin.dsl.module
 
@@ -17,6 +18,7 @@ val domainModule = module {
     single { PlayMusicUseCase(get()) }
     single { ResumeMusicUseCase(get()) }
     single { PauseMusicUseCase(get()) }
-    single { GetCurrentPositionUseCase(get()) }
+    single { SeekMusicPositionUseCase(get()) }
+    single { GetCurrentMusicPositionUseCase(get()) }
     single { DestroyMediaControllerUseCase(get()) }
 }

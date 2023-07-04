@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ajailani.musicplayer.domain.use_case.DestroyMediaControllerUseCase
-import com.ajailani.musicplayer.domain.use_case.GetCurrentPositionUseCase
+import com.ajailani.musicplayer.domain.use_case.GetCurrentMusicPositionUseCase
 import com.ajailani.musicplayer.domain.use_case.SetMediaControllerCallbackUseCase
 import com.ajailani.musicplayer.util.PlayerState
 import kotlinx.coroutines.delay
@@ -15,7 +15,7 @@ import kotlin.time.Duration.Companion.seconds
 
 class SharedViewModel(
     private val setMediaControllerCallbackUseCase: SetMediaControllerCallbackUseCase,
-    private val getCurrentPositionUseCase: GetCurrentPositionUseCase,
+    private val getCurrentMusicPositionUseCase: GetCurrentMusicPositionUseCase,
     private val destroyPlaybackCallbackUseCase: DestroyMediaControllerUseCase
 ) : ViewModel() {
     var musicPlaybackUiState by mutableStateOf(MusicPlaybackUiState())
@@ -39,7 +39,7 @@ class SharedViewModel(
                     while (true) {
                         delay(1.seconds)
                         musicPlaybackUiState = musicPlaybackUiState.copy(
-                            currentPosition = getCurrentPositionUseCase()
+                            currentPosition = getCurrentMusicPositionUseCase()
                         )
                     }
                 }
