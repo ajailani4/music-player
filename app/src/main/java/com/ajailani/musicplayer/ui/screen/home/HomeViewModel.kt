@@ -30,11 +30,11 @@ class HomeViewModel(
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            HomeEvent.PlayMusic -> play()
+            HomeEvent.PlayMusic -> playMusic()
 
-            HomeEvent.ResumeMusic -> resume()
+            HomeEvent.ResumeMusic -> resumeMusic()
 
-            HomeEvent.PauseMusic -> pause()
+            HomeEvent.PauseMusic -> pauseMusic()
 
             is HomeEvent.OnMusicSelected -> {
                 homeUiState = homeUiState.copy(selectedMusic = event.selectedMusic)
@@ -75,7 +75,7 @@ class HomeViewModel(
         }
     }
 
-    private fun play() {
+    private fun playMusic() {
         homeUiState.apply {
             musics?.indexOf(selectedMusic)?.let {
                 playMusicUseCase(it)
@@ -83,11 +83,11 @@ class HomeViewModel(
         }
     }
 
-    private fun resume() {
+    private fun resumeMusic() {
         resumeMusicUseCase()
     }
 
-    private fun pause() {
+    private fun pauseMusic() {
         pauseMusicUseCase()
     }
 }
