@@ -39,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -86,11 +87,13 @@ fun MusicPlayerScreen(
                         Spacer(modifier = Modifier.height(40.dp))
                         Text(
                             text = title,
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleLarge
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
                             text = artist,
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Spacer(modifier = Modifier.height(30.dp))
