@@ -1,6 +1,7 @@
 package com.ajailani.musicplayer.ui.screen.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -55,7 +56,10 @@ fun HomeScreen(
                 loading == false && errorMessage == null -> {
                     if (musics != null) {
                         Box {
-                            LazyColumn(modifier = Modifier.padding(innerPadding)) {
+                            LazyColumn(
+                                modifier = Modifier.padding(innerPadding),
+                                contentPadding = PaddingValues(bottom = 80.dp)
+                            ) {
                                 items(musics) {
                                     MusicItem(
                                         music = it,

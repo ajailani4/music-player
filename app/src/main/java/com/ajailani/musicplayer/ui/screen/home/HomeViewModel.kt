@@ -87,7 +87,6 @@ class HomeViewModel(
         resumeMusicUseCase()
     }
 
-
     private fun pause() {
         pauseMusicUseCase()
     }
