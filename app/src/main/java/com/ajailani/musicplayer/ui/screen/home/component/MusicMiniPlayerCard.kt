@@ -51,7 +51,7 @@ fun MusicMiniPlayerCard(
                 .padding(7.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row {
+            Row(modifier = Modifier.weight(1f)) {
                 music?.run {
                     AsyncImage(
                         modifier = Modifier
