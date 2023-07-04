@@ -32,7 +32,7 @@ class MusicPlayerViewModel(
 
             is MusicPlayerEvent.SetMusicShuffleEnabled -> setMusicShuffleEnabled(event.isShuffleEnabled)
 
-            is MusicPlayerEvent.SetPlayerRepeatOneEnabled -> setPlayerRepeatMode(event.isRepeatOneEnabled)
+            is MusicPlayerEvent.SetPlayerRepeatOneEnabled -> setPlayerRepeatOneEnabled(event.isRepeatOneEnabled)
         }
     }
 
@@ -60,7 +60,7 @@ class MusicPlayerViewModel(
         setMusicShuffleEnabledUseCase(isEnabled)
     }
 
-    private fun setPlayerRepeatMode(isRepeatOneEnabled: Boolean) {
+    private fun setPlayerRepeatOneEnabled(isRepeatOneEnabled: Boolean) {
         setPlayerRepeatOneEnabledUseCase(isRepeatOneEnabled)
     }
 }
