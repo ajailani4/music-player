@@ -1,6 +1,10 @@
 package com.ajailani.musicplayer.ui.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,8 +35,25 @@ fun Navigation(
             )
         }
 
-        composable(Screen.MusicPlayer.route) {
-            MusicPlayerScreen(musicPlaybackUiState)
+        composable(
+            route = Screen.MusicPlayer.route,
+            enterTransition = {
+                expandVertically(
+                    animationSpec = tween(300),
+                    expandFrom = Alignment.Top
+                )
+            },
+            exitTransition = {
+                shrinkVertically(
+                    animationSpec = tween(300),
+                    shrinkTowards = Alignment.Top
+                )
+            }
+        ) {
+            MusicPlayerScreen(
+                musicPlaybackUiState = musicPlaybackUiState,
+                onNavigateUp = { navController.navigateUp() }
+            )
         }
     }
 }

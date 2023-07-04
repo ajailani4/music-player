@@ -10,15 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PauseCircle
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Repeat
 import androidx.compose.material.icons.filled.Shuffle
@@ -38,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -50,7 +46,8 @@ import com.ajailani.musicplayer.util.toTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MusicPlayerScreen(
-    musicPlaybackUiState: MusicPlaybackUiState
+    musicPlaybackUiState: MusicPlaybackUiState,
+    onNavigateUp: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -60,7 +57,7 @@ fun MusicPlayerScreen(
         Column(modifier = Modifier.padding(20.dp)) {
             IconButton(
                 modifier = Modifier.size(24.dp),
-                onClick = { /*TODO*/ }
+                onClick = { onNavigateUp() }
             ) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
