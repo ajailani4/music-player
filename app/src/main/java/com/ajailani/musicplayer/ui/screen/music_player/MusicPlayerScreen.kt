@@ -102,7 +102,9 @@ fun MusicPlayerScreen(
                         Slider(
                             value = currentPosition.toFloat(),
                             valueRange = 0f..totalDuration.toFloat(),
-                            onValueChange = {}
+                            onValueChange = {
+                                onEvent(MusicPlayerEvent.SeekMusicPosition(it.toLong()))
+                            }
                         )
                     }
                     Spacer(modifier = Modifier.height(3.dp))

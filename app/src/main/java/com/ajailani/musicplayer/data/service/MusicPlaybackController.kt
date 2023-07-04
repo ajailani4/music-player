@@ -99,6 +99,10 @@ class MusicPlaybackController(context: Context) : PlaybackController {
         mediaController?.pause()
     }
 
+    override fun seekTo(position: Long) {
+        mediaController?.seekTo(position)
+    }
+
     override fun getCurrentPosition() = mediaController?.currentPosition ?: 0L
 
     override fun destroy() {

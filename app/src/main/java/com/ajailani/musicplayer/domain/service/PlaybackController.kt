@@ -15,6 +15,7 @@ interface PlaybackController {
     fun play(mediaItemIndex: Int)
     fun resume()
     fun pause()
+    fun seekTo(position: Long)
     fun getCurrentPosition(): Long
     fun destroy()
 }
