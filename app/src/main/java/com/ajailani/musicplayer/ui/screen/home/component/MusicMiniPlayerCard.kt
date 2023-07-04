@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.rounded.Pause
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,7 +25,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.media3.common.MediaItem
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ajailani.musicplayer.domain.model.Music
@@ -92,9 +91,9 @@ fun MusicMiniPlayerCard(
             ) {
                 Icon(
                     imageVector = if (playerState == PlayerState.PLAYING) {
-                        Icons.Default.Pause
+                        Icons.Rounded.Pause
                     } else {
-                        Icons.Default.PlayArrow
+                        Icons.Rounded.PlayArrow
                     },
                     contentDescription = "Play or pause button"
                 )
