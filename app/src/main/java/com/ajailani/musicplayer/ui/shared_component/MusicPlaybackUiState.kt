@@ -8,5 +8,6 @@ data class MusicPlaybackUiState(
     val currentMusic: Music? = null,
     val currentPosition: Long = 0L,
     val totalDuration: Long = 0L,
-    val isShuffleEnabled: Boolean = false
+    val isShuffleEnabled: Boolean = false,
+    val isRepeatOneEnabled: Boolean = false
 )

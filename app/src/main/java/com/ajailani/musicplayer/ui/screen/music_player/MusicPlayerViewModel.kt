@@ -5,6 +5,7 @@ import com.ajailani.musicplayer.domain.use_case.SetMusicShuffleEnabledUseCase
 import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.ResumeMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.SeekMusicPositionUseCase
+import com.ajailani.musicplayer.domain.use_case.SetPlayerRepeatOneEnabledUseCase
 import com.ajailani.musicplayer.domain.use_case.SkipNextMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.SkipPreviousMusicUseCase
 
@@ -14,7 +15,8 @@ class MusicPlayerViewModel(
     private val seekMusicPositionUseCase: SeekMusicPositionUseCase,
     private val skipNextMusicUseCase: SkipNextMusicUseCase,
     private val skipPreviousMusicUseCase: SkipPreviousMusicUseCase,
-    private val setMusicShuffleEnabledUseCase: SetMusicShuffleEnabledUseCase
+    private val setMusicShuffleEnabledUseCase: SetMusicShuffleEnabledUseCase,
+    private val setPlayerRepeatOneEnabledUseCase: SetPlayerRepeatOneEnabledUseCase
 ) : ViewModel() {
     fun onEvent(event: MusicPlayerEvent) {
         when (event) {
@@ -29,6 +31,8 @@ class MusicPlayerViewModel(
             is MusicPlayerEvent.SeekMusicPosition -> seekToMusicPosition(event.musicPosition)
 
             is MusicPlayerEvent.SetMusicShuffleEnabled -> setMusicShuffleEnabled(event.isShuffleEnabled)
+
+            is MusicPlayerEvent.SetPlayerRepeatOneEnabled -> setPlayerRepeatMode(event.isRepeatOneEnabled)
         }
     }
 
@@ -54,5 +58,9 @@ class MusicPlayerViewModel(
 
     private fun setMusicShuffleEnabled(isEnabled: Boolean) {
         setMusicShuffleEnabledUseCase(isEnabled)
+    }
+
+    private fun setPlayerRepeatMode(isRepeatOneEnabled: Boolean) {
+        setPlayerRepeatOneEnabledUseCase(isRepeatOneEnabled)
     }
 }

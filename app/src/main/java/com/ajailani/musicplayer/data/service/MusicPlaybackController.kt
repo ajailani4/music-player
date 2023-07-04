@@ -22,11 +22,14 @@ class MusicPlaybackController(context: Context) : PlaybackController {
         get() = if (mediaControllerFuture.isDone) mediaControllerFuture.get() else null
 
     override var mediaControllerCallback: (
-        (playerState: PlayerState,
-         currentMusic: Music?,
-         currentPosition: Long,
-         totalDuration: Long,
-         isShuffleEnabled: Boolean) -> Unit
+        (
+        playerState: PlayerState,
+        currentMusic: Music?,
+        currentPosition: Long,
+        totalDuration: Long,
+        isShuffleEnabled: Boolean,
+        isRepeatOneEnabled: Boolean
+    ) -> Unit
     )? = null
 
     init {
@@ -42,30 +45,25 @@ class MusicPlaybackController(context: Context) : PlaybackController {
                 super.onEvents(player, events)
 
                 with(player) {
-                    val playerState = mapPlaybackStateToPlayerState(
-                        playbackState = playbackState,
-                        isPlaying = isPlaying
-                    )
-
                     mediaControllerCallback?.invoke(
-                        playerState,
+                        playbackState.toPlayerState(isPlaying),
                         currentMediaItem?.toMusic(),
                         currentPosition.coerceAtLeast(0L),
                         duration.coerceAtLeast(0L),
-                        shuffleModeEnabled
+                        shuffleModeEnabled,
+                        repeatMode == Player.REPEAT_MODE_ONE
                     )
                 }
             }
         })
     }
 
-    private fun mapPlaybackStateToPlayerState(playbackState: Int, isPlaying: Boolean): PlayerState {
-        return when (playbackState) {
+    private fun Int.toPlayerState(isPlaying: Boolean) =
+        when (this) {
             Player.STATE_IDLE -> PlayerState.STOPPED
             Player.STATE_ENDED -> PlayerState.STOPPED
             else -> if (isPlaying) PlayerState.PLAYING else PlayerState.PAUSED
         }
-    }
 
     override fun addMediaItems(musics: List<Music>) {
         val mediaItems = musics.map {
@@ -115,6 +113,14 @@ class MusicPlaybackController(context: Context) : PlaybackController {
 
     override fun setShuffleModeEnabled(isEnabled: Boolean) {
         mediaController?.shuffleModeEnabled = isEnabled
+    }
+
+    override fun setRepeatOneEnabled(isEnabled: Boolean) {
+        mediaController?.repeatMode = if (isEnabled) {
+            Player.REPEAT_MODE_ONE
+        } else {
+            Player.REPEAT_MODE_OFF
+        }
     }
 
     override fun getCurrentPosition() = mediaController?.currentPosition ?: 0L

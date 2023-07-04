@@ -17,7 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.PauseCircle
 import androidx.compose.material.icons.rounded.PlayCircle
-import androidx.compose.material.icons.rounded.Repeat
+import androidx.compose.material.icons.rounded.RepeatOne
+import androidx.compose.material.icons.rounded.RepeatOneOn
 import androidx.compose.material.icons.rounded.Shuffle
 import androidx.compose.material.icons.rounded.ShuffleOn
 import androidx.compose.material.icons.rounded.SkipNext
@@ -180,8 +181,18 @@ fun MusicPlayerScreen(
                         Icon(
                             modifier = Modifier
                                 .size(32.dp)
-                                .clickable {},
-                            imageVector = Icons.Rounded.Repeat,
+                                .clickable {
+                                    if (isRepeatOneEnabled) {
+                                        onEvent(MusicPlayerEvent.SetPlayerRepeatOneEnabled(false))
+                                    } else {
+                                        onEvent(MusicPlayerEvent.SetPlayerRepeatOneEnabled(true))
+                                    }
+                                },
+                            imageVector = if (isRepeatOneEnabled) {
+                                Icons.Rounded.RepeatOneOn
+                            } else {
+                                Icons.Rounded.RepeatOne
+                            },
                             contentDescription = "Repeat button"
                         )
                     }
