@@ -2,35 +2,49 @@ package com.ajailani.musicplayer.ui.screen.music_player
 
 import androidx.lifecycle.ViewModel
 import com.ajailani.musicplayer.domain.use_case.PauseMusicUseCase
-import com.ajailani.musicplayer.domain.use_case.PlayMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.ResumeMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.SeekMusicPositionUseCase
-import com.ajailani.musicplayer.ui.screen.home.HomeEvent
+import com.ajailani.musicplayer.domain.use_case.SkipNextMusicUseCase
+import com.ajailani.musicplayer.domain.use_case.SkipPreviousMusicUseCase
 
 class MusicPlayerViewModel(
     private val resumeMusicUseCase: ResumeMusicUseCase,
     private val pauseMusicUseCase: PauseMusicUseCase,
-    private val seekMusicPositionUseCase: SeekMusicPositionUseCase
+    private val seekMusicPositionUseCase: SeekMusicPositionUseCase,
+    private val skipNextMusicUseCase: SkipNextMusicUseCase,
+    private val skipPreviousMusicUseCase: SkipPreviousMusicUseCase
 ) : ViewModel() {
     fun onEvent(event: MusicPlayerEvent) {
         when (event) {
-            MusicPlayerEvent.ResumeMusic -> resume()
+            MusicPlayerEvent.ResumeMusic -> resumeMusic()
 
-            MusicPlayerEvent.PauseMusic -> pause()
+            MusicPlayerEvent.PauseMusic -> pauseMusic()
 
-            is MusicPlayerEvent.SeekMusicPosition -> seekTo(event.musicPosition)
+            MusicPlayerEvent.SkipNextMusic -> skipNextMusic()
+
+            MusicPlayerEvent.SkipPreviousMusic -> skipPreviousMusic()
+
+            is MusicPlayerEvent.SeekMusicPosition -> seekToMusicPosition(event.musicPosition)
         }
     }
 
-    private fun resume() {
+    private fun resumeMusic() {
         resumeMusicUseCase()
     }
 
-    private fun pause() {
+    private fun pauseMusic() {
         pauseMusicUseCase()
     }
 
-    private fun seekTo(position: Long) {
+    private fun seekToMusicPosition(position: Long) {
         seekMusicPositionUseCase(position)
+    }
+
+    private fun skipNextMusic() {
+        skipNextMusicUseCase()
+    }
+
+    private fun skipPreviousMusic() {
+        skipPreviousMusicUseCase()
     }
 }

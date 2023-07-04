@@ -139,7 +139,7 @@ fun MusicPlayerScreen(
                             modifier = Modifier
                                 .size(32.dp)
                                 .clip(CircleShape)
-                                .clickable {},
+                                .clickable { onEvent(MusicPlayerEvent.SkipPreviousMusic) },
                             imageVector = Icons.Default.SkipPrevious,
                             contentDescription = "Skip previous button"
                         )
@@ -165,7 +165,7 @@ fun MusicPlayerScreen(
                             modifier = Modifier
                                 .size(32.dp)
                                 .clip(CircleShape)
-                                .clickable {},
+                                .clickable { onEvent(MusicPlayerEvent.SkipNextMusic) },
                             imageVector = Icons.Default.SkipNext,
                             contentDescription = "Skip next button"
                         )

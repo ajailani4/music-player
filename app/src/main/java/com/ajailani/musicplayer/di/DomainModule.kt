@@ -9,6 +9,8 @@ import com.ajailani.musicplayer.domain.use_case.PlayMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.ResumeMusicUseCase
 import com.ajailani.musicplayer.domain.use_case.SeekMusicPositionUseCase
 import com.ajailani.musicplayer.domain.use_case.SetMediaControllerCallbackUseCase
+import com.ajailani.musicplayer.domain.use_case.SkipNextMusicUseCase
+import com.ajailani.musicplayer.domain.use_case.SkipPreviousMusicUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
@@ -19,6 +21,8 @@ val domainModule = module {
     single { ResumeMusicUseCase(get()) }
     single { PauseMusicUseCase(get()) }
     single { SeekMusicPositionUseCase(get()) }
+    single { SkipNextMusicUseCase(get()) }
+    single { SkipPreviousMusicUseCase(get()) }
     single { GetCurrentMusicPositionUseCase(get()) }
     single { DestroyMediaControllerUseCase(get()) }
 }
