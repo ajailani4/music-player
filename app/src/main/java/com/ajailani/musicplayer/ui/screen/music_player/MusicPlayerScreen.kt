@@ -14,13 +14,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.PauseCircle
-import androidx.compose.material.icons.filled.PlayCircle
-import androidx.compose.material.icons.filled.Repeat
-import androidx.compose.material.icons.filled.Shuffle
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.SkipPrevious
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.PauseCircle
+import androidx.compose.material.icons.rounded.PlayCircle
+import androidx.compose.material.icons.rounded.Repeat
+import androidx.compose.material.icons.rounded.Shuffle
+import androidx.compose.material.icons.rounded.SkipNext
+import androidx.compose.material.icons.rounded.SkipPrevious
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -61,7 +61,7 @@ fun MusicPlayerScreen(
                 onClick = { onNavigateUp() }
             ) {
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
+                    imageVector = Icons.Rounded.KeyboardArrowDown,
                     contentDescription = "Minimize music player"
                 )
             }
@@ -132,7 +132,7 @@ fun MusicPlayerScreen(
                                 .size(32.dp)
                                 .clip(CircleShape)
                                 .clickable {},
-                            imageVector = Icons.Default.Shuffle,
+                            imageVector = Icons.Rounded.Shuffle,
                             contentDescription = "Shuffle button"
                         )
                         Icon(
@@ -140,7 +140,7 @@ fun MusicPlayerScreen(
                                 .size(32.dp)
                                 .clip(CircleShape)
                                 .clickable { onEvent(MusicPlayerEvent.SkipPreviousMusic) },
-                            imageVector = Icons.Default.SkipPrevious,
+                            imageVector = Icons.Rounded.SkipPrevious,
                             contentDescription = "Skip previous button"
                         )
                         Icon(
@@ -155,9 +155,9 @@ fun MusicPlayerScreen(
                                     }
                                 },
                             imageVector = if (playerState == PlayerState.PLAYING) {
-                                Icons.Default.PauseCircle
+                                Icons.Rounded.PauseCircle
                             } else {
-                                Icons.Default.PlayCircle
+                                Icons.Rounded.PlayCircle
                             },
                             contentDescription = "Play or pause button"
                         )
@@ -166,7 +166,7 @@ fun MusicPlayerScreen(
                                 .size(32.dp)
                                 .clip(CircleShape)
                                 .clickable { onEvent(MusicPlayerEvent.SkipNextMusic) },
-                            imageVector = Icons.Default.SkipNext,
+                            imageVector = Icons.Rounded.SkipNext,
                             contentDescription = "Skip next button"
                         )
                         Icon(
@@ -174,7 +174,7 @@ fun MusicPlayerScreen(
                                 .size(32.dp)
                                 .clip(CircleShape)
                                 .clickable {},
-                            imageVector = Icons.Default.Repeat,
+                            imageVector = Icons.Rounded.Repeat,
                             contentDescription = "Repeat button"
                         )
                     }
