@@ -24,7 +24,7 @@ import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
+import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -46,6 +46,7 @@ import com.ajailani.musicplayer.util.toTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MusicPlayerScreen(
+    onEvent: (MusicPlayerEvent) -> Unit,
     musicPlaybackUiState: MusicPlaybackUiState,
     onNavigateUp: () -> Unit
 ) {
@@ -93,14 +94,16 @@ fun MusicPlayerScreen(
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        Spacer(modifier = Modifier.height(30.dp))
-                        CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-                            Slider(
-                                value = currentPosition.toFloat(),
-                                valueRange = 0f..totalDuration.toFloat(),
-                                onValueChange = {}
-                            )
-                        }
+                    }
+
+                    // Music Playback
+                    Spacer(modifier = Modifier.height(30.dp))
+                    CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+                        Slider(
+                            value = currentPosition.toFloat(),
+                            valueRange = 0f..totalDuration.toFloat(),
+                            onValueChange = {}
+                        )
                     }
                     Spacer(modifier = Modifier.height(3.dp))
                     Row(
@@ -142,7 +145,13 @@ fun MusicPlayerScreen(
                             modifier = Modifier
                                 .size(70.dp)
                                 .clip(CircleShape)
-                                .clickable {},
+                                .clickable {
+                                    when (playerState) {
+                                        PlayerState.PLAYING -> onEvent(MusicPlayerEvent.PauseMusic)
+                                        PlayerState.PAUSED -> onEvent(MusicPlayerEvent.ResumeMusic)
+                                        else -> {}
+                                    }
+                                },
                             imageVector = if (playerState == PlayerState.PLAYING) {
                                 Icons.Default.PauseCircle
                             } else {

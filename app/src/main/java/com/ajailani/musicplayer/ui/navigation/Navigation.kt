@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import com.ajailani.musicplayer.ui.screen.home.HomeScreen
 import com.ajailani.musicplayer.ui.screen.home.HomeViewModel
 import com.ajailani.musicplayer.ui.screen.music_player.MusicPlayerScreen
+import com.ajailani.musicplayer.ui.screen.music_player.MusicPlayerViewModel
 import com.ajailani.musicplayer.ui.shared_component.SharedViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -50,7 +51,10 @@ fun Navigation(
                 )
             }
         ) {
+            val musicPlayerViewModel: MusicPlayerViewModel = koinViewModel()
+
             MusicPlayerScreen(
+                onEvent = musicPlayerViewModel::onEvent,
                 musicPlaybackUiState = musicPlaybackUiState,
                 onNavigateUp = { navController.navigateUp() }
             )
