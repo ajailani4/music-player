@@ -22,14 +22,12 @@ class MusicPlaybackController(context: Context) : PlaybackController {
         get() = if (mediaControllerFuture.isDone) mediaControllerFuture.get() else null
 
     override var mediaControllerCallback: (
-        (
-        playerState: PlayerState,
-        currentMusic: Music?,
-        currentPosition: Long,
-        totalDuration: Long,
-        isShuffleEnabled: Boolean,
-        isRepeatOneEnabled: Boolean
-    ) -> Unit
+        (playerState: PlayerState,
+         currentMusic: Music?,
+         currentPosition: Long,
+         totalDuration: Long,
+         isShuffleEnabled: Boolean,
+         isRepeatOneEnabled: Boolean) -> Unit
     )? = null
 
     init {
