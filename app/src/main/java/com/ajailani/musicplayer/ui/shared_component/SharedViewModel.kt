@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.seconds
 class SharedViewModel(
     private val setMediaControllerCallbackUseCase: SetMediaControllerCallbackUseCase,
     private val getCurrentMusicPositionUseCase: GetCurrentMusicPositionUseCase,
-    private val destroyPlaybackCallbackUseCase: DestroyMediaControllerUseCase
+    private val destroyMediaControllerUseCase: DestroyMediaControllerUseCase
 ) : ViewModel() {
     var musicPlaybackUiState by mutableStateOf(MusicPlaybackUiState())
         private set
@@ -51,6 +51,6 @@ class SharedViewModel(
     }
 
     fun destroyMediaController() {
-        destroyPlaybackCallbackUseCase()
+        destroyMediaControllerUseCase()
     }
 }
