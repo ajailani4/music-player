@@ -7,7 +7,8 @@ This app implements Clean Architecture which has three main layers, UI/Presentat
 ## Tech Stack and Libraries
 - Kotlin
 - Jetpack Compose
-- Media3
+- Material Design 3
+- Jetpack Media3
 - Koin
 - Flow
 - Coroutines
