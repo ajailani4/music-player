@@ -71,7 +71,7 @@ fun HomeScreen(
                                 }
                             }
 
-                            musicPlaybackUiState.run {
+                            with(musicPlaybackUiState) {
                                 if (playerState != PlayerState.STOPPED) {
                                     MusicMiniPlayerCard(
                                         modifier = Modifier
